@@ -15,7 +15,7 @@ namespace Assignment_2
 
             // Question 2: Sort Array by Parity
             Console.WriteLine("Question 2:");
-            int[] nums2 = { 3, 1, 2, 4 };
+            int[] nums2 = { 0, 1, 2 };
             int[] sortedArray = SortArrayByParity(nums2);
             Console.WriteLine(string.Join(",", sortedArray));
 
@@ -62,8 +62,26 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new List<int>(); // Placeholder
+                List<int> result = new List<int>();
+                int n = nums.Length;
+                // Mark present numbers using index manipulation
+                for (int i = 0; i < n; i++)
+                {
+                    int index = Math.Abs(nums[i]) - 1;
+                    if (nums[index] > 0)
+                    {
+                        nums[index] = -nums[index];
+                    }
+                }
+                // Find missing numbers (positive indices + 1)
+                for (int i = 0; i < n; i++)
+                {
+                    if (nums[i] > 0)
+                    {
+                        result.Add(i + 1);
+                    }
+                }
+                return result;
             }
             catch (Exception)
             {
@@ -76,8 +94,24 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                int left = 0, right = nums.Length - 1;
+                while (left < right)
+                {
+                    // Find first odd number from left
+                    while (left < right && nums[left] % 2 == 0)
+                        left++;
+                    // Find first even number from right
+                    while (left < right && nums[right] % 2 == 1)
+                        right--;
+                    // Swap odd and even numbers
+                    if (left < right)
+                    {
+                        int temp = nums[left];
+                        nums[left] = nums[right];
+                        nums[right] = temp;
+                    }
+                }
+                return nums;
             }
             catch (Exception)
             {
@@ -90,8 +124,20 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                Dictionary<int, int> map = new Dictionary<int, int>();
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    int complement = target - nums[i];
+                    if (map.ContainsKey(complement))
+                    {
+                        return new int[] { map[complement], i };
+                    }
+                    if (!map.ContainsKey(nums[i]))
+                    {
+                        map.Add(nums[i], i);
+                    }
+                }
+                return new int[0];
             }
             catch (Exception)
             {
@@ -104,8 +150,13 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                Array.Sort(nums);
+                int n = nums.Length;
+               
+                return Math.Max(
+                    nums[n - 1] * nums[n - 2] * nums[n - 3],
+                    nums[0] * nums[1] * nums[n - 1]
+                );
             }
             catch (Exception)
             {
@@ -118,8 +169,17 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return "101010"; // Placeholder
+                if (decimalNumber == 0)
+                    return "0";
+
+                List<int> binary = new List<int>();
+                while (decimalNumber > 0)
+                {
+                    binary.Add(decimalNumber % 2);
+                    decimalNumber /= 2;
+                }
+                binary.Reverse();
+                return string.Join("", binary);
             }
             catch (Exception)
             {
@@ -132,8 +192,20 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                int left = 0, right = nums.Length - 1;
+                while (left < right)
+                {
+                    int mid = left + (right - left) / 2;
+                    if (nums[mid] > nums[right])
+                    {
+                        left = mid + 1;
+                    }
+                    else
+                    {
+                        right = mid;
+                    }
+                }
+                return nums[left];
             }
             catch (Exception)
             {
@@ -146,8 +218,21 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return false; // Placeholder
+                if (x < 0)
+                    return false;
+
+                // Single digit numbers are palindromes
+                if (x < 10)
+                    return true;
+
+                int original = x;
+                int reversed = 0;
+                while (x > 0)
+                {
+                    reversed = reversed * 10 + x % 10;
+                    x /= 10;
+                }
+                return original == reversed;
             }
             catch (Exception)
             {
@@ -160,8 +245,17 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                if (n <= 1)
+                    return n;
+
+                int prev = 0, current = 1;
+                for (int i = 2; i <= n; i++)
+                {
+                    int next = prev + current;
+                    prev = current;
+                    current = next;
+                }
+                return current;
             }
             catch (Exception)
             {
